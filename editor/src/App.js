@@ -40,13 +40,19 @@ class App extends Component {
       .then(response => response.json())
       .then(fig => { 
         this.setState({dataSources: fig.data});
+        const dataSourceOptions = Object.keys(fig.data).map((name) => ({
+          value: name,
+          label: name,
+        }));
+        this.setState({dataSourceOptions: dataSourceOptions});
+
       });
 
-    const dataSourceOptions = Object.keys(this.state.dataSources).map((name) => ({
-      value: name,
-      label: name,
-    }));
-    this.setState({dataSourceOptions: [{value: "expression", label: "expression"},]});//dataSourceOptions});
+    // const dataSourceOptions = Object.keys(this.state.dataSources).map((name) => ({
+    //   value: name,
+    //   label: name,
+    // }));
+    // this.setState({dataSourceOptions: dataSourceOptions});// [{value: "expression", label: "expression"},]});//dataSourceOptions});
   }
 
   render() {
