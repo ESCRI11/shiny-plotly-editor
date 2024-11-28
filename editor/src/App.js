@@ -10,15 +10,23 @@ class App extends Component {
     this.state = {
       data: [],
       layout: {},
-      config: {}
+      config: {},
+      dataSources: {},
+      dataSourceOptions: {}
     };
   }
+
 
   UNSAFE_componentWillMount() {
     const searchParams = new URLSearchParams(window.location.search);
     const plotURL = searchParams.get('plotURL');
+    const plotDS = searchParams.get('plotDS');
 
     if (!plotURL) {
+      return; // TODO: maybe alert with an informative message?
+    }    
+
+    if (!plotDS) {
       return; // TODO: maybe alert with an informative message?
     }    
 
@@ -27,15 +35,32 @@ class App extends Component {
       .then(fig => { 
         this.setState({data: fig.data, layout: fig.layout, config: fig.config});
       });
+
+    fetch(plotDS)
+      .then(response => response.json())
+      .then(fig => { 
+        this.setState({dataSources: fig.data});
+      });
+
+    const dataSourceOptions = Object.keys(this.state.dataSources).map((name) => ({
+      value: name,
+      label: name,
+    }));
+    this.setState({dataSourceOptions: [{value: "expression", label: "expression"},]});//dataSourceOptions});
   }
 
   render() {
+    console.log(this.state.data);
+    console.log(this.state.dataSources);
+    console.log(this.state.dataSourceOptions);
     return (
       <div className="app">
         <PlotlyEditor
           data={this.state.data}
           layout={this.state.layout}
           config={this.state.config}
+          dataSources={this.state.dataSources}
+          dataSourceOptions = {this.state.dataSourceOptions}
           plotly={plotly}
           onUpdate={(data, layout, frames) => this.setState({data, layout, frames})}
           useResizeHandler
