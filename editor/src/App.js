@@ -45,20 +45,10 @@ class App extends Component {
           label: name,
         }));
         this.setState({dataSourceOptions: dataSourceOptions});
-
       });
-
-    // const dataSourceOptions = Object.keys(this.state.dataSources).map((name) => ({
-    //   value: name,
-    //   label: name,
-    // }));
-    // this.setState({dataSourceOptions: dataSourceOptions});// [{value: "expression", label: "expression"},]});//dataSourceOptions});
   }
 
   render() {
-    console.log(this.state.data);
-    console.log(this.state.dataSources);
-    console.log(this.state.dataSourceOptions);
     return (
       <div className="app">
         <PlotlyEditor
