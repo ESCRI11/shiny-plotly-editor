@@ -12,7 +12,7 @@ class App extends Component {
       layout: {},
       config: {},
       dataSources: {},
-      dataSourceOptions: {}
+      dataSourceOptions: []
     };
   }
 
